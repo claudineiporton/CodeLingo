@@ -1,23 +1,27 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
-import { COLORS, SPACING, BORDER_RADIUS, FONTS } from '../constants/theme';
+import { getColors, SPACING, BORDER_RADIUS, FONTS } from '../constants/theme';
+import { useStore } from '../store/useStore';
 
 export const Button = ({ title, onPress, type = 'primary', style }) => {
+    const isDarkMode = useStore((state) => state.isDarkMode);
+    const colors = getColors(isDarkMode);
+
     const getButtonStyle = () => {
         switch (type) {
             case 'secondary':
-                return styles.secondaryButton;
+                return [styles.secondaryButton, { backgroundColor: colors.cardBackground, borderColor: colors.border }];
             case 'ghost':
                 return styles.ghostButton;
             default:
-                return styles.primaryButton;
+                return [styles.primaryButton, { backgroundColor: colors.primary }];
         }
     };
 
     const getTextStyle = () => {
         switch (type) {
             case 'secondary':
-                return styles.secondaryText;
+                return [styles.secondaryText, { color: colors.textSecondary }];
             case 'ghost':
                 return styles.ghostText;
             default:
@@ -34,7 +38,7 @@ export const Button = ({ title, onPress, type = 'primary', style }) => {
             <View style={styles.inner}>
                 <Text style={[styles.text, getTextStyle()]}>{title}</Text>
             </View>
-            <View style={[styles.bottomLayer, { backgroundColor: type === 'primary' ? COLORS.primaryDark : '#E5E5E5' }]} />
+            <View style={[styles.bottomLayer, { backgroundColor: type === 'primary' ? colors.primaryDark : colors.border }]} />
         </TouchableOpacity>
     );
 };

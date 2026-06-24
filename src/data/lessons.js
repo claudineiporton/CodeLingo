@@ -1123,6 +1123,67 @@ export const LESSONS = {
                     answer: 'tool'
                 }
             ]
+        },
+        {
+            id: 'ai13',
+            title: 'Criando e Configurando Skills',
+            type: 'concept',
+            exercises: [
+                {
+                    id: 'ai13_1',
+                    type: 'info',
+                    title: 'Como incluir uma nova Skill',
+                    content: 'Para incluir uma skill customizada no OpenClaw, você deve:\n1. Escrever uma função em Python que realiza a ação desejada.\n2. Decorar essa função usando @skill com um nome e descrição claros.\n3. Salvar o arquivo (ex: clima.py) dentro da pasta "skills/" do seu projeto.\n4. Declarar a skill no arquivo config.yaml do OpenClaw.',
+                    tip: '💡 Dica: A descrição que você escreve no decorador @skill é o que a LLM usa para saber QUANDO e COMO chamar sua função. Seja bem descritivo!'
+                },
+                {
+                    id: 'ai13_2',
+                    type: 'multiple-choice',
+                    question: 'Em qual diretório do OpenClaw devemos colocar os arquivos .py das novas habilidades por padrão?',
+                    options: [
+                        'skills/',
+                        'config/',
+                        'models/',
+                        'agents/'
+                    ],
+                    answer: 'skills/'
+                },
+                {
+                    id: 'ai13_3',
+                    type: 'info',
+                    title: 'Escrevendo o Código Python',
+                    content: 'Um exemplo completo de uma skill para consultar o clima:\n\nfrom openclaw.skills import skill\n\n@skill(name="ver_clima", description="Obtém a temperatura atual de uma cidade")\ndef ver_clima(cidade: str) -> str:\n    return f"O clima em {cidade} é de 22°C."\n\nNote que usamos Type Hints (como cidade: str) para que a IA entenda os parâmetros necessários.',
+                    tip: '💡 Dica: Seus argumentos e retornos devem sempre usar tipos claros em Python.'
+                },
+                {
+                    id: 'ai13_4',
+                    type: 'tap-fill',
+                    question: 'Complete o decorador em Python para expor a função obter_xp como uma skill:',
+                    textTemplate: '{blank}(name="obter_xp", description="Retorna os pontos do usuário")',
+                    options: ['@skill', '@tool', '@plugin', 'def'],
+                    answer: '@skill'
+                },
+                {
+                    id: 'ai13_5',
+                    type: 'multiple-choice',
+                    question: 'Como fazemos para que o OpenClaw ative a skill no arquivo de configuração config.yaml?',
+                    options: [
+                        'Adicionamos o nome da skill na lista sob a chave "skills:"',
+                        'A skill é ativada automaticamente sem configuração extra',
+                        'Precisamos compilar o OpenClaw novamente',
+                        'Colocamos o caminho da skill no arquivo .env'
+                    ],
+                    answer: 'Adicionamos o nome da skill na lista sob a chave "skills:"'
+                },
+                {
+                    id: 'ai13_6',
+                    type: 'tap-fill',
+                    question: 'Complete a configuração para ativar a skill obter_xp no config.yaml:',
+                    textTemplate: 'skills:\n  - {blank}',
+                    options: ['obter_xp', 'true', 'active', 'ollama'],
+                    answer: 'obter_xp'
+                }
+            ]
         }
     ],
     linux: [
@@ -1437,6 +1498,152 @@ export const LESSONS = {
                     textTemplate: 'Ctrl + Shift + {blank}',
                     options: ['C', 'V', 'Z', 'P'],
                     answer: 'C'
+                }
+            ]
+        },
+        {
+            id: 'l7',
+            title: 'Editores de Texto: Nano e Vim',
+            type: 'concept',
+            exercises: [
+                {
+                    id: 'l7_1',
+                    type: 'info',
+                    title: 'Editando Arquivos no Terminal',
+                    content: 'Para editar arquivos de texto direto no terminal (sem interface gráfica), usamos editores de linha de comando. Os dois principais são:\n1) Nano: Muito simples e amigável. Mostra os atalhos na tela. Para salvar usa-se "Ctrl + O" e para sair "Ctrl + X".\n2) Vim: Extremamente poderoso, mas possui curva de aprendizado. Possui o Modo de Inserção (aperte "i" para digitar) e o Modo de Comando (aperte "Esc"). Para salvar e sair, digita-se ":wq" e enter. Para sair sem salvar, digita-se ":q!".',
+                    tip: '💡 Dica: Se ficar preso no Vim, aperte Esc várias vezes e digite :q! para sair com segurança.'
+                },
+                {
+                    id: 'l7_2',
+                    type: 'multiple-choice',
+                    question: 'No editor Nano, qual atalho usamos para fechar o editor (sair)?',
+                    options: [
+                        'Ctrl + X',
+                        'Ctrl + O',
+                        'Ctrl + C',
+                        ':wq'
+                    ],
+                    answer: 'Ctrl + X'
+                },
+                {
+                    id: 'l7_3',
+                    type: 'tap-fill',
+                    question: 'Complete o comando para abrir ou criar o arquivo notas.txt no editor Nano:',
+                    textTemplate: '{blank} notas.txt',
+                    options: ['nano', 'vim', 'cat', 'open'],
+                    answer: 'nano'
+                },
+                {
+                    id: 'l7_4',
+                    type: 'multiple-choice',
+                    question: 'Qual comando digitamos no Vim (no modo de comando) para salvar as alterações e sair?',
+                    options: [
+                        ':wq',
+                        ':q!',
+                        'Ctrl + X',
+                        ':save'
+                    ],
+                    answer: ':wq'
+                }
+            ]
+        },
+        {
+            id: 'l8',
+            title: 'Copiando e Movendo: cp e mv',
+            type: 'concept',
+            exercises: [
+                {
+                    id: 'l8_1',
+                    type: 'info',
+                    title: 'cp e mv',
+                    content: 'Para manipular arquivos no terminal:\n- cp (copy): Copia arquivos. Exemplo: "cp original.txt copia.txt". Para copiar pastas inteiras com tudo dentro, adicionamos o parâmetro "-r" (recursivo), ex: "cp -r pasta1 pasta2".\n- mv (move): Move ou renomeia arquivos/pastas. Exemplo: "mv antigo.txt novo.txt" (renomeia) ou "mv arquivo.txt pasta/" (move).',
+                    tip: '💡 Dica: O comando "mv" não precisa de parâmetros extras para mover pastas, diferente do "cp"!'
+                },
+                {
+                    id: 'l8_2',
+                    type: 'multiple-choice',
+                    question: 'Qual comando usamos no Linux para mover ou renomear arquivos e pastas?',
+                    options: [
+                        'mv',
+                        'cp',
+                        'rn',
+                        'rm'
+                    ],
+                    answer: 'mv'
+                },
+                {
+                    id: 'l8_3',
+                    type: 'tap-fill',
+                    question: 'Complete o comando para fazer uma cópia do arquivo index.html como backup.html:',
+                    textTemplate: '{blank} index.html backup.html',
+                    options: ['cp', 'mv', 'rm', 'mkdir'],
+                    answer: 'cp'
+                },
+                {
+                    id: 'l8_4',
+                    type: 'multiple-choice',
+                    question: 'Qual parâmetro devemos usar com "cp" para copiar uma pasta inteira e seus conteúdos?',
+                    options: [
+                        '-r (recursivo)',
+                        '-d (diretório)',
+                        '-f (forçado)',
+                        '-a (tudo)'
+                    ],
+                    answer: '-r (recursivo)'
+                },
+                {
+                    id: 'l8_5',
+                    type: 'tap-fill',
+                    question: 'Complete o comando para renomear o arquivo teste.txt para final.txt:',
+                    textTemplate: 'mv teste.txt {blank}',
+                    options: ['final.txt', 'teste.txt', 'cp', 'rename'],
+                    answer: 'final.txt'
+                }
+            ]
+        },
+        {
+            id: 'l9',
+            title: 'Procurando Textos com Grep',
+            type: 'concept',
+            exercises: [
+                {
+                    id: 'l9_1',
+                    type: 'info',
+                    title: 'O Poder do Grep',
+                    content: 'O comando grep é usado para fazer buscas e encontrar linhas de texto dentro de arquivos de forma rápida. Por exemplo: "grep \"erro\" syslog.log" vai listar todas as linhas que contém a palavra "erro".\nParâmetros úteis:\n- "-i": ignora maiúsculas e minúsculas (case-insensitive).\n- "-r": busca recursiva em todos os arquivos dentro de pastas.',
+                    tip: '💡 Dica: Você pode usar o grep em conjunto com outros comandos usando a barra vertical "|" (pipe).'
+                },
+                {
+                    id: 'l9_2',
+                    type: 'multiple-choice',
+                    question: 'Qual a principal função do comando grep no terminal Linux?',
+                    options: [
+                        'Procurar padrões de texto dentro de arquivos',
+                        'Criar novos arquivos de texto',
+                        'Visualizar o espaço livre em disco',
+                        'Gerenciar processos em segundo plano'
+                    ],
+                    answer: 'Procurar padrões de texto dentro de arquivos'
+                },
+                {
+                    id: 'l9_3',
+                    type: 'tap-fill',
+                    question: 'Complete o comando para buscar a palavra "concluido" no arquivo log.txt:',
+                    textTemplate: '{blank} "concluido" log.txt',
+                    options: ['grep', 'cat', 'find', 'search'],
+                    answer: 'grep'
+                },
+                {
+                    id: 'l9_4',
+                    type: 'multiple-choice',
+                    question: 'Qual parâmetro usamos para fazer o grep buscar sem diferenciar letras maiúsculas e minúsculas?',
+                    options: [
+                        '-i',
+                        '-r',
+                        '-c',
+                        '-v'
+                    ],
+                    answer: '-i'
                 }
             ]
         }

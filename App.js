@@ -5,11 +5,13 @@ import { LanguageSelector } from './src/screens/LanguageSelector';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { LessonScreen } from './src/screens/LessonScreen';
 import { useStore } from './src/store/useStore';
-import { COLORS } from './src/constants/theme';
+import { getColors } from './src/constants/theme';
 
 export default function App() {
     const currentTrack = useStore((state) => state.currentTrack);
     const activeTracks = useStore((state) => state.activeTracks);
+    const isDarkMode = useStore((state) => state.isDarkMode);
+    const colors = getColors(isDarkMode);
     const [currentLesson, setCurrentLesson] = useState(null);
     const [isAddingTrack, setIsAddingTrack] = useState(false);
 
@@ -39,7 +41,7 @@ export default function App() {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
             {(!currentTrack || isAddingTrack) ? (
                 <LanguageSelector onBack={handleBackFromSelector} />
             ) : currentLesson ? (
@@ -53,7 +55,7 @@ export default function App() {
                     onAddTrack={handleAddTrack}
                 />
             )}
-            <StatusBar style="auto" />
+            <StatusBar style={isDarkMode ? 'light' : 'dark'} />
         </View>
     );
 }

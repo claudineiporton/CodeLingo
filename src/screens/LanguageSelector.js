@@ -1,18 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import { Button } from '../components/Button';
-import { COLORS, SPACING, FONTS } from '../constants/theme';
+import { getColors, SPACING, FONTS } from '../constants/theme';
 import { useStore } from '../store/useStore';
 
 export const LanguageSelector = ({ onBack }) => {
     const selectTrack = useStore((state) => state.selectTrack);
     const activeTracks = useStore((state) => state.activeTracks);
+    const isDarkMode = useStore((state) => state.isDarkMode);
+    const toggleTheme = useStore((state) => state.toggleTheme);
+    const colors = getColors(isDarkMode);
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+            <View style={styles.header}>
+                <TouchableOpacity onPress={toggleTheme} style={styles.themeToggle}>
+                    <Text style={{ fontSize: 20 }}>{isDarkMode ? '☀️' : '🌙'}</Text>
+                </TouchableOpacity>
+            </View>
             <View style={styles.content}>
-                <Text style={styles.title}>O que você quer aprender hoje?</Text>
-                <Text style={styles.subtitle}>Escolha sua primeira trilha</Text>
+                <Text style={[styles.title, { color: colors.text }]}>O que você quer aprender hoje?</Text>
+                <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Escolha sua primeira trilha</Text>
 
                 <View style={styles.options}>
                     <Button
@@ -94,24 +102,36 @@ export const LanguageSelector = ({ onBack }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.background,
+    },
+    header: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        paddingHorizontal: SPACING.lg,
+        paddingTop: SPACING.md,
+    },
+    themeToggle: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     content: {
         flex: 1,
-        padding: SPACING.lg,
+        paddingHorizontal: SPACING.lg,
+        paddingBottom: SPACING.lg,
         alignItems: 'center',
         justifyContent: 'center',
     },
     title: {
         fontSize: FONTS.size.xl,
         fontWeight: 'bold',
-        color: COLORS.text,
         textAlign: 'center',
         marginBottom: SPACING.sm,
     },
     subtitle: {
         fontSize: FONTS.size.md,
-        color: COLORS.textSecondary,
         marginBottom: SPACING.xl,
     },
     options: {

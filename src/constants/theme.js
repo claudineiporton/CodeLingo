@@ -1,16 +1,18 @@
-export const COLORS = {
+export const getColors = (isDarkMode) => ({
     primary: '#58CC02',    // Duolingo Green
     primaryDark: '#46A302',
     secondary: '#FFC800',  // Duolingo Yellow
     error: '#FF4B4B',      // Duolingo Red
-    text: '#4B4B4B',
-    textSecondary: '#777777',
-    border: '#E5E5E5',
-    cardBackground: '#FFFFFF',
-    background: '#FFFFFF',
-    gray: '#AFAFAF',
+    text: isDarkMode ? '#F3F3F3' : '#4B4B4B',
+    textSecondary: isDarkMode ? '#AFAFAF' : '#777777',
+    border: isDarkMode ? '#2D2D2D' : '#E5E5E5',
+    cardBackground: isDarkMode ? '#1E1E1E' : '#FFFFFF',
+    background: isDarkMode ? '#121212' : '#FFFFFF',
+    gray: isDarkMode ? '#555555' : '#AFAFAF',
     blue: '#1CB0F6',       // Duolingo Blue
-};
+});
+
+export const COLORS = getColors(false);
 
 export const SPACING = {
     xs: 4,

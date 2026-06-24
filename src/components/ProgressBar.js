@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, StyleSheet, Animated } from 'react-native';
-import { COLORS, BORDER_RADIUS } from '../constants/theme';
+import { getColors, BORDER_RADIUS } from '../constants/theme';
+import { useStore } from '../store/useStore';
 
 export const ProgressBar = ({ progress }) => {
+    const isDarkMode = useStore((state) => state.isDarkMode);
+    const colors = getColors(isDarkMode);
     const animatedWidth = React.useRef(new Animated.Value(progress)).current;
 
     React.useEffect(() => {
@@ -20,8 +23,8 @@ export const ProgressBar = ({ progress }) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.background}>
-                <Animated.View style={[styles.fill, { width }]}>
+            <View style={[styles.background, { backgroundColor: colors.border }]}>
+                <Animated.View style={[styles.fill, { width, backgroundColor: colors.primary }]}>
                     <View style={styles.highlight} />
                 </Animated.View>
             </View>

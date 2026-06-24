@@ -2,38 +2,49 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useStore } from '../store/useStore';
 import { LESSONS } from '../data/lessons';
-import { COLORS, SPACING, FONTS, BORDER_RADIUS } from '../constants/theme';
+import { getColors, SPACING, FONTS, BORDER_RADIUS } from '../constants/theme';
 
 export const HomeScreen = ({ onStartLesson, onAddTrack }) => {
     const currentTrack = useStore((state) => state.currentTrack);
     const activeTracks = useStore((state) => state.activeTracks);
     const selectTrack = useStore((state) => state.selectTrack);
+    const isDarkMode = useStore((state) => state.isDarkMode);
+    const toggleTheme = useStore((state) => state.toggleTheme);
+    const colors = getColors(isDarkMode);
+
     const xp = useStore((state) => state.xpByTrack[currentTrack] || 0);
     const progress = useStore((state) => state.progress[currentTrack] || 0);
     const lessons = LESSONS[currentTrack] || [];
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
+        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+            <View style={[styles.header, { borderBottomColor: colors.border }]}>
                 <View style={styles.trackSwitcher}>
                     {activeTracks.map(track => (
                         <TouchableOpacity
                             key={track}
                             onPress={() => selectTrack(track)}
-                            style={[styles.trackTab, currentTrack === track && styles.activeTab]}
+                            style={[
+                                styles.trackTab,
+                                { backgroundColor: isDarkMode ? '#2D2D2D' : '#F7F7F7' },
+                                currentTrack === track && [styles.activeTab, { borderColor: colors.primary, backgroundColor: colors.cardBackground }]
+                            ]}
                         >
                             <Text style={styles.trackTabText}>
                                 {track === 'java' ? '☕' : track === 'react' ? '⚛️' : track === 'postgresql' ? '🐘' : track === 'python' ? '🐍' : track === 'wsl_docker' ? '🐳' : track === 'agentes_ia' ? '🤖' : track === 'linux' ? '🐧' : '❓'}
                             </Text>
                         </TouchableOpacity>
                     ))}
-                    <TouchableOpacity onPress={onAddTrack} style={styles.addTrackTab}>
-                        <Text style={styles.addTrackTabText}>+</Text>
+                    <TouchableOpacity onPress={onAddTrack} style={[styles.addTrackTab, { backgroundColor: colors.border }]}>
+                        <Text style={[styles.addTrackTabText, { color: colors.textSecondary }]}>+</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.stats}>
-                    <Text style={styles.statText}>🔥 0</Text>
-                    <Text style={styles.statText}>💎 {xp}</Text>
+                    <Text style={[styles.statText, { color: colors.text }]}>🔥 0</Text>
+                    <Text style={[styles.statText, { color: colors.text }]}>💎 {xp}</Text>
+                    <TouchableOpacity onPress={toggleTheme} style={styles.themeToggle}>
+                        <Text style={{ fontSize: 20 }}>{isDarkMode ? '☀️' : '🌙'}</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -43,13 +54,13 @@ export const HomeScreen = ({ onStartLesson, onAddTrack }) => {
                         <TouchableOpacity
                             style={[
                                 styles.node,
-                                { backgroundColor: index === 0 || lesson.completed ? COLORS.primary : COLORS.gray }
+                                { backgroundColor: index === 0 || lesson.completed ? colors.primary : colors.gray }
                             ]}
                             onPress={() => onStartLesson(lesson)}
                         >
                             <Text style={styles.nodeIcon}>{lesson.completed ? '✅' : '⭐'}</Text>
                         </TouchableOpacity>
-                        <Text style={styles.nodeTitle}>{lesson.title}</Text>
+                        <Text style={[styles.nodeTitle, { color: colors.text }]}>{lesson.title}</Text>
                     </View>
                 ))}
             </ScrollView>
@@ -60,7 +71,6 @@ export const HomeScreen = ({ onStartLesson, onAddTrack }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.background,
     },
     header: {
         height: 70,
@@ -69,7 +79,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: SPACING.md,
         borderBottomWidth: 2,
-        borderBottomColor: COLORS.border,
     },
     trackSwitcher: {
         flexDirection: 'row',
@@ -96,27 +105,32 @@ const styles = StyleSheet.create({
         width: 44,
         height: 44,
         borderRadius: 22,
-        backgroundColor: COLORS.border,
         justifyContent: 'center',
         alignItems: 'center',
     },
     addTrackTabText: {
         fontSize: 24,
-        color: COLORS.textSecondary,
         fontWeight: 'bold',
     },
     headerTitle: {
         fontSize: FONTS.size.lg,
         fontWeight: 'bold',
-        color: COLORS.primary,
     },
     stats: {
         flexDirection: 'row',
+        alignItems: 'center',
         gap: SPACING.md,
     },
     statText: {
         fontSize: FONTS.size.md,
         fontWeight: 'bold',
+    },
+    themeToggle: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     scrollContent: {
         alignItems: 'center',
@@ -145,6 +159,5 @@ const styles = StyleSheet.create({
         marginTop: SPACING.sm,
         fontSize: FONTS.size.md,
         fontWeight: 'bold',
-        color: COLORS.text,
     }
 });

@@ -23,6 +23,9 @@ export const useStore = create((set) => ({
         agentes_ia: 0,
         linux: 0,
     },
+    isDarkMode: false,
+
+    toggleTheme: () => set((state) => ({ isDarkMode: !state.isDarkMode })),
 
     selectTrack: (trackId) => set((state) => ({
         currentTrack: trackId,
