@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useStore } from '../store/useStore';
 import { LESSONS } from '../data/lessons';
-import { getColors, SPACING, FONTS, BORDER_RADIUS } from '../constants/theme';
+import { getColors, COLORS, SPACING, FONTS, BORDER_RADIUS } from '../constants/theme';
 
 export const HomeScreen = ({ onStartLesson, onAddTrack }) => {
     const currentTrack = useStore((state) => state.currentTrack);

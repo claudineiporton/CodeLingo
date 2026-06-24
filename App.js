@@ -5,7 +5,7 @@ import { LanguageSelector } from './src/screens/LanguageSelector';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { LessonScreen } from './src/screens/LessonScreen';
 import { useStore } from './src/store/useStore';
-import { getColors } from './src/constants/theme';
+import { getColors, COLORS } from './src/constants/theme';
 
 export default function App() {
     const currentTrack = useStore((state) => state.currentTrack);

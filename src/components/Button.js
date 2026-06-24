@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
-import { getColors, SPACING, BORDER_RADIUS, FONTS } from '../constants/theme';
+import { getColors, COLORS, SPACING, BORDER_RADIUS, FONTS } from '../constants/theme';
 import { useStore } from '../store/useStore';
 
 export const Button = ({ title, onPress, type = 'primary', style }) => {

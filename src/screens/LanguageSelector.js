@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, TouchableOpacity } from 'react-native';
 import { Button } from '../components/Button';
-import { getColors, SPACING, FONTS } from '../constants/theme';
+import { getColors, COLORS, SPACING, FONTS } from '../constants/theme';
 import { useStore } from '../store/useStore';
 
 export const LanguageSelector = ({ onBack }) => {

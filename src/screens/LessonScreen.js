@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { ProgressBar } from '../components/ProgressBar';
 import { Button } from '../components/Button';
-import { getColors, SPACING, FONTS, BORDER_RADIUS } from '../constants/theme';
+import { getColors, COLORS, SPACING, FONTS, BORDER_RADIUS } from '../constants/theme';
 import { useStore } from '../store/useStore';
 
 export const LessonScreen = ({ lesson, onFinish }) => {

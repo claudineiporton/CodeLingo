@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Animated } from 'react-native';
-import { getColors, BORDER_RADIUS } from '../constants/theme';
+import { getColors, COLORS, BORDER_RADIUS } from '../constants/theme';
 import { useStore } from '../store/useStore';
 
 export const ProgressBar = ({ progress }) => {
