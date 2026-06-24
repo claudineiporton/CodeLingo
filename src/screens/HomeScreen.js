@@ -19,25 +19,31 @@ export const HomeScreen = ({ onStartLesson, onAddTrack }) => {
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={[styles.header, { borderBottomColor: colors.border }]}>
-                <View style={styles.trackSwitcher}>
-                    {activeTracks.map(track => (
-                        <TouchableOpacity
-                            key={track}
-                            onPress={() => selectTrack(track)}
-                            style={[
-                                styles.trackTab,
-                                { backgroundColor: isDarkMode ? '#2D2D2D' : '#F7F7F7' },
-                                currentTrack === track && [styles.activeTab, { borderColor: colors.primary, backgroundColor: colors.cardBackground }]
-                            ]}
-                        >
-                            <Text style={styles.trackTabText}>
-                                {track === 'java' ? '☕' : track === 'react' ? '⚛️' : track === 'postgresql' ? '🐘' : track === 'python' ? '🐍' : track === 'wsl_docker' ? '🐳' : track === 'agentes_ia' ? '🤖' : track === 'linux' ? '🐧' : '❓'}
-                            </Text>
+                <View style={styles.trackSwitcherWrapper}>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.trackSwitcher}
+                    >
+                        {activeTracks.map(track => (
+                            <TouchableOpacity
+                                key={track}
+                                onPress={() => selectTrack(track)}
+                                style={[
+                                    styles.trackTab,
+                                    { backgroundColor: isDarkMode ? '#2D2D2D' : '#F7F7F7' },
+                                    currentTrack === track && [styles.activeTab, { borderColor: colors.primary, backgroundColor: colors.cardBackground }]
+                                ]}
+                            >
+                                <Text style={styles.trackTabText}>
+                                    {track === 'java' ? '☕' : track === 'react' ? '⚛️' : track === 'postgresql' ? '🐘' : track === 'python' ? '🐍' : track === 'wsl_docker' ? '🐳' : track === 'agentes_ia' ? '🤖' : track === 'linux' ? '🐧' : '❓'}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                        <TouchableOpacity onPress={onAddTrack} style={[styles.addTrackTab, { backgroundColor: colors.border }]}>
+                            <Text style={[styles.addTrackTabText, { color: colors.textSecondary }]}>+</Text>
                         </TouchableOpacity>
-                    ))}
-                    <TouchableOpacity onPress={onAddTrack} style={[styles.addTrackTab, { backgroundColor: colors.border }]}>
-                        <Text style={[styles.addTrackTabText, { color: colors.textSecondary }]}>+</Text>
-                    </TouchableOpacity>
+                    </ScrollView>
                 </View>
                 <View style={styles.stats}>
                     <Text style={[styles.statText, { color: colors.text }]}>🔥 0</Text>
@@ -80,9 +86,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: SPACING.md,
         borderBottomWidth: 2,
     },
+    trackSwitcherWrapper: {
+        flex: 1,
+        marginRight: SPACING.sm,
+    },
     trackSwitcher: {
         flexDirection: 'row',
         gap: SPACING.xs,
+        alignItems: 'center',
     },
     trackTab: {
         width: 44,
