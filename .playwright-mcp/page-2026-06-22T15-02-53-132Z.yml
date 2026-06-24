@@ -1,0 +1,13 @@
+- generic [ref=e2]:
+  - generic [ref=e5]:
+    - generic [ref=e6]: O que você quer aprender hoje?
+    - generic [ref=e7]: Escolha sua primeira trilha
+    - generic [ref=e8]:
+      - generic [ref=e11] [cursor=pointer]: ☕ Java (Backend)
+      - generic [ref=e15] [cursor=pointer]: ⚛️ React (Frontend)
+      - generic [ref=e19] [cursor=pointer]: 🐘 PostgreSQL (Banco de Dados)
+      - generic [ref=e23] [cursor=pointer]: 🐍 Python (Data Science)
+      - generic [ref=e27] [cursor=pointer]: 🐳 WSL & Docker (Infraestrutura)
+      - generic [ref=e31] [cursor=pointer]: 🤖 Agentes de IA (Ollama & OpenClaw)
+  - generic:
+    - img

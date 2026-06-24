@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# expo
+.expo/
+web-build/
+
+# local env files
+.env
+.env*.local
+
+# build outputs
+dist/
+
+# IDEs and OS
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
